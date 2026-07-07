@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://dqhly78qspxbf"]
+
+[ext_resource type="Script" uid="uid://dpsyhfb0pc1ko" path="res://SlotArea.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://c01dlj7hvff5g" path="res://player.gd" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://ccjnffjqbwlkl" path="res://volume_shooting_by_superandyeah_dhkc0f1-350t.png" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://bou2o0fi4li3" path="res://silhouette.gd" id="4_1bvp3"]
+[ext_resource type="Script" uid="uid://dps5dcpuc1t72" path="res://reticle.gd" id="4_lquwl"]
+[ext_resource type="Texture2D" uid="uid://dudp3ju2txtux" path="res://clipart1323676.png" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://cfnik44ybv86" path="res://throw_manager.gd" id="7_272bh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g7b7a"]
+size = Vector2(150, 150)
+
+[node name="main" type="Node2D" unique_id=863230734]
+
+[node name="Game" type="Node" parent="." unique_id=678194101]
+
+[node name="SlotMarkers" type="Node" parent="Game" unique_id=1543379339]
+
+[node name="SlotL" type="Marker2D" parent="Game/SlotMarkers" unique_id=702136546]
+position = Vector2(99, 556)
+
+[node name="SlotArea" type="Area2D" parent="Game/SlotMarkers/SlotL" unique_id=1209721888]
+script = ExtResource("1_0xm2m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/SlotMarkers/SlotL/SlotArea" unique_id=772418348]
+shape = SubResource("RectangleShape2D_g7b7a")
+
+[node name="SlotC" type="Marker2D" parent="Game/SlotMarkers" unique_id=323101066]
+position = Vector2(576, 556)
+
+[node name="SlotArea" type="Area2D" parent="Game/SlotMarkers/SlotC" unique_id=1330896001]
+script = ExtResource("1_0xm2m")
+slot_index = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/SlotMarkers/SlotC/SlotArea" unique_id=1258602468]
+shape = SubResource("RectangleShape2D_g7b7a")
+
+[node name="SlotR" type="Marker2D" parent="Game/SlotMarkers" unique_id=1434669325]
+position = Vector2(1066, 556)
+
+[node name="SlotArea" type="Area2D" parent="Game/SlotMarkers/SlotR" unique_id=1356725863]
+script = ExtResource("1_0xm2m")
+slot_index = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/SlotMarkers/SlotR/SlotArea" unique_id=1229758988]
+shape = SubResource("RectangleShape2D_g7b7a")
+
+[node name="Player" type="Node2D" parent="Game" unique_id=1999509212 node_paths=PackedStringArray("slot_markers", "slot_areas", "silhouette")]
+script = ExtResource("1_ig7tw")
+slot_markers = [NodePath("../SlotMarkers/SlotL"), NodePath("../SlotMarkers/SlotC"), NodePath("../SlotMarkers/SlotR")]
+slot_areas = [NodePath("../SlotMarkers/SlotL/SlotArea"), NodePath("../SlotMarkers/SlotC/SlotArea"), NodePath("../SlotMarkers/SlotR/SlotArea")]
+silhouette = NodePath("../Silhouette")
+
+[node name="Sprite2D" type="Sprite2D" parent="Game/Player" unique_id=1189094935]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_h2yge")
+
+[node name="Silhouette" type="Sprite2D" parent="Game" unique_id=2080324573]
+visible = false
+modulate = Color(0.0051745414, 0.0051745414, 0.0051745414, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_h2yge")
+script = ExtResource("4_1bvp3")
+
+[node name="Reticle" type="Node2D" parent="Game" unique_id=401062632 node_paths=PackedStringArray("slot_areas")]
+script = ExtResource("4_lquwl")
+slot_areas = [NodePath("../SlotMarkers/SlotL/SlotArea"), NodePath("../SlotMarkers/SlotC/SlotArea"), NodePath("../SlotMarkers/SlotR/SlotArea")]
+
+[node name="Sprite2D" type="Sprite2D" parent="Game/Reticle" unique_id=540167898]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("5_7mycd")
+
+[node name="ThrowManager" type="Node" parent="Game" unique_id=818480071 node_paths=PackedStringArray("reticle", "player")]
+script = ExtResource("7_272bh")
+reticle = NodePath("../Reticle")
+player = NodePath("../Player")
