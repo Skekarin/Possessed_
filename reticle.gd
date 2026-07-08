@@ -17,5 +17,9 @@ func _unhandled_input(event):
 
 	var is_release = (event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed) \
 		or (event is InputEventScreenTouch and not event.pressed)
-	if is_release and not _is_over_slot(get_global_mouse_position()):
-		throw_requested.emit(global_position)
+	if is_release:
+		if GameState.suppress_next_throw:
+			GameState.suppress_next_throw = false
+			return
+		if not _is_over_slot(get_global_mouse_position()):
+			throw_requested.emit(global_position)

@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://dpsyhfb0pc1ko" path="res://SlotArea.gd" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://c01dlj7hvff5g" path="res://player.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://wcahv6bee30u" path="res://slot_markers.gd" id="1_kek77"]
 [ext_resource type="Texture2D" uid="uid://ccjnffjqbwlkl" path="res://volume_shooting_by_superandyeah_dhkc0f1-350t.png" id="3_h2yge"]
 [ext_resource type="Script" uid="uid://bou2o0fi4li3" path="res://silhouette.gd" id="4_1bvp3"]
 [ext_resource type="Script" uid="uid://dps5dcpuc1t72" path="res://reticle.gd" id="4_lquwl"]
 [ext_resource type="Texture2D" uid="uid://dudp3ju2txtux" path="res://clipart1323676.png" id="5_7mycd"]
 [ext_resource type="Script" uid="uid://cfnik44ybv86" path="res://throw_manager.gd" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://h6ewee5hvle2" path="res://knife.tscn" id="8_5vw27"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g7b7a"]
 size = Vector2(150, 150)
@@ -15,7 +17,9 @@ size = Vector2(150, 150)
 
 [node name="Game" type="Node" parent="." unique_id=678194101]
 
-[node name="SlotMarkers" type="Node" parent="Game" unique_id=1543379339]
+[node name="SlotMarkers" type="Node" parent="Game" unique_id=1543379339 node_paths=PackedStringArray("slot_markers")]
+script = ExtResource("1_kek77")
+slot_markers = [NodePath("SlotL"), NodePath("SlotC"), NodePath("SlotR")]
 
 [node name="SlotL" type="Marker2D" parent="Game/SlotMarkers" unique_id=702136546]
 position = Vector2(99, 556)
@@ -58,7 +62,7 @@ texture = ExtResource("3_h2yge")
 
 [node name="Silhouette" type="Sprite2D" parent="Game" unique_id=2080324573]
 visible = false
-modulate = Color(0.0051745414, 0.0051745414, 0.0051745414, 1)
+modulate = Color(0.003921569, 0.003921569, 0.003921569, 0.6862745)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_h2yge")
 script = ExtResource("4_1bvp3")
@@ -71,7 +75,12 @@ slot_areas = [NodePath("../SlotMarkers/SlotL/SlotArea"), NodePath("../SlotMarker
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("5_7mycd")
 
-[node name="ThrowManager" type="Node" parent="Game" unique_id=818480071 node_paths=PackedStringArray("reticle", "player")]
+[node name="ThrowManager" type="Node" parent="Game" unique_id=818480071 node_paths=PackedStringArray("reticle", "player", "wall_line")]
 script = ExtResource("7_272bh")
 reticle = NodePath("../Reticle")
 player = NodePath("../Player")
+knife_scene = ExtResource("8_5vw27")
+wall_line = NodePath("../WallLine")
+
+[node name="WallLine" type="Marker2D" parent="Game" unique_id=1323684149]
+position = Vector2(580, 73)
